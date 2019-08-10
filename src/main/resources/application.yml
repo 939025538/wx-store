@@ -7,7 +7,7 @@ spring:
   jpa:
     show-sql: true
   redis:
-    host: 192.168.1.7
+    host: 192.168.1.9
     port: 6379
 
 server:
