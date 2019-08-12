@@ -4,5 +4,5 @@ public interface SeckillService {
 
     String querySeckillProductInfo(String productId);
 
-    String orderProductMockDiffUser(String productId);
+    void orderProductMockDiffUser(String productId);
 }

@@ -9,6 +9,10 @@ import org.forstudy.sell.service.ProductInfoService;
 import org.forstudy.sell.utils.KeyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -87,6 +91,10 @@ public class SellerProductController {
     }
 
     @PostMapping("/save")
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "buyerProduct",key = "123")
+//            @CacheEvict(cacheNames = "sellProduct",key = "456")
+    })
     public ModelAndView save(@Valid ProductForm productForm,
                              BindingResult bindingResult,
                              Map<String,Object> map){

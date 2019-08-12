@@ -48,8 +48,10 @@ public class CookieUtil {
     private static Map<String,Cookie> readCookieMap(HttpServletRequest request){
         Map<String,Cookie> cookieMap = new HashMap<>();
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies){
-            cookieMap.put(cookie.getName(),cookie);
+        if(cookies!=null) {
+            for (Cookie cookie : cookies) {
+                cookieMap.put(cookie.getName(), cookie);
+            }
         }
 
         return cookieMap;

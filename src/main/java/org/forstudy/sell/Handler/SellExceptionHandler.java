@@ -18,7 +18,6 @@ public class SellExceptionHandler {
 
     //拦截登录异常
     @ExceptionHandler(value = SellerAuthorizeException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     public ModelAndView handlerAuthorizeException(){
 //        return new ModelAndView("redirect:"
 //                .concat(projectUrlConfig.getWechatOpenAuthorize())
