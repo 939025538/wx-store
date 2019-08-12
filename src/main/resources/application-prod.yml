@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ssh?serverTimezone=UTC&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.1.9
+    port: 6379
+
+server:
+  context-path: /sell
+
+
+wechat:
+  mpAppId: wxb96016f2551af105
+  mpAppSecret: 5f02277e88a4742cf13d0a7b3cdd014d
+  openAppId: null
+  openAppSecret: null
+  mchId: null
+  mchKey: null
+  keyPath: null
+  notifyUrl: http://...
+  templateId:
+    orderStatus: dk_eN6RENN5IWqfSm7HttZvJQyG2n7_Y4dJOBN-Pkoo
+
+
+projectUrl:
+  wechatMpAuthorize: http://dzahuo.natapp1.cc
+  wechatOpenAuthorize: http://dzahuo.natapp1.cc
+  sell: http://dzahuo.natapp1.cc
+  redirectOrderList: /sell/seller/order/list
+logging:
+  level:
+    org.forstudy.sell.dataobject.mapper: trace
