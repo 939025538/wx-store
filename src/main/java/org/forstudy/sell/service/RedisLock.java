@@ -14,7 +14,13 @@ public class RedisLock {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    public Boolean lock(String key , String value){
+    /**
+     * 加锁
+     * @param key
+     * @param value 当前时间+超时时间（10s）
+     * @return
+     */
+    public boolean lock(String key , String value){
         if (redisTemplate.opsForValue().setIfAbsent(key , value)){
             return true;
         }

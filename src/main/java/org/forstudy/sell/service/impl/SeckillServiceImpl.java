@@ -1,5 +1,6 @@
 package org.forstudy.sell.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.forstudy.sell.exception.SellException;
 import org.forstudy.sell.service.RedisLock;
 import org.forstudy.sell.service.SeckillService;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class SeckillServiceImpl implements SeckillService {
 
     private static final int TIMEOUT = 10 * 1000;
@@ -33,30 +35,34 @@ public class SeckillServiceImpl implements SeckillService {
         stock.put("123123",100000);
     }
 
-    @Override
-    public String querySeckillProductInfo(String productId) {
+    private String queryMap(String productId){
         return "国庆特价商品限量"+prodcuts.get(productId)+"份，" +
                 "剩余"+stock.get(productId)+"份" +
                 "，已抢购"+orders.size()+"份！";
     }
 
     @Override
-    public String orderProductMockDiffUser(String productId) {
-        int stockNum = stock.get(productId);
-        if (stockNum == 0){
-            throw new SellException(403,"活动结束");
-        }
+    public String querySeckillProductInfo(String productId) {
+        return this.queryMap(productId);
+    }
 
+    @Override
+    public void orderProductMockDiffUser(String productId) {
         //加锁
         long time = System.currentTimeMillis() + TIMEOUT;
         if (!redisLock.lock(productId , String.valueOf(time))){
             throw new SellException(401,"手慢了一步，在试试吧！");
         }
-
+        int stockNum = stock.get(productId);
+        if (stockNum == 0){
+            throw new SellException(403,"活动结束");
+        }
         //模拟不同用户的OpenId
         orders.put(KeyUtils.genUniqueKey(),productId);
         //减库存
-        stockNum = stockNum - 1;
+        stockNum -= 1;
+        log.info("orders.size:{}",orders.size());
+        log.info("stockNum:{}",stockNum);
         try {
             Thread.sleep(100);
         }catch (Exception e){
@@ -67,6 +73,5 @@ public class SeckillServiceImpl implements SeckillService {
         //解锁
         redisLock.unlock(productId,String.valueOf(time));
 
-        return querySeckillProductInfo(productId);
     }
 }

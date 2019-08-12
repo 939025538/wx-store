@@ -3,9 +3,13 @@ package org.forstudy.sell.VO;
 import lombok.Data;
 import org.forstudy.sell.enums.ResultVOEnums;
 
+import java.io.Serializable;
+
 
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = 4588816873239478302L;
 
     private Integer code;
 

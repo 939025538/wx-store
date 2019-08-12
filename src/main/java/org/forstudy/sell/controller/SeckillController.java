@@ -23,7 +23,6 @@ public class SeckillController {
 
     @GetMapping("/order/{productId}")
     public String skill(@PathVariable String productId){
-        log.info("@skill request,");
         seckillService.orderProductMockDiffUser(productId);
         return seckillService.querySeckillProductInfo(productId);
     }

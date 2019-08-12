@@ -13,6 +13,8 @@ import org.forstudy.sell.service.impl.BuyerServiceImpl;
 import org.forstudy.sell.service.impl.OrderServiceImpl;
 import org.forstudy.sell.utils.ResultVoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +40,7 @@ public class BuyerOrderController {
 
     //创建订单
     @PostMapping("/create")
+    @CacheEvict(cacheNames = "buyerOrder" , key = "list" )
     public ResultVO<Map<String , String>> create(@Valid OrderForm orderForm , BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             log.error("【创建订单】 传递参数异常，OrderForm={}",orderForm);
@@ -60,6 +63,7 @@ public class BuyerOrderController {
 
     //订单列表
     @GetMapping("/list")
+    @Cacheable(cacheNames = "buyerOrder" , key = "list" )
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid ,
                                          @RequestParam(value = "page",defaultValue = "0") Integer page ,
                                          @RequestParam(value = "size",defaultValue = "10") Integer size){
@@ -74,6 +78,7 @@ public class BuyerOrderController {
 
     //订单详情
     @GetMapping("/detail")
+    @Cacheable(cacheNames = "buyerOrder" , key = "detail")
     public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
                                      @RequestParam("orderid") String orderid){
         //TODO 不安全的做法，待改进
