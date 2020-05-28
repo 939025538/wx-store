@@ -19,7 +19,7 @@ public class OrderDetailRepositoryTest {
 
     @Autowired
     private OrderDetailRepository repository;
-
+//添加y添加y添加y
     @Test
     public void saveTest(){
         OrderDetail orderDetail = repository.save(new OrderDetail("0002","123456","017","Jay演唱会门票", new BigDecimal(1680),2,"还没上架就卖光的演唱会门票.jpg"));
